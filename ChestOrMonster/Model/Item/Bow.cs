@@ -3,15 +3,19 @@
 
 namespace ChestOrMonster.Model.Item
 {
-    internal class Bow : Weapon
+    internal class Bow : Weapon, IWeapon
     {
-        public string Name { get; private set; }
-        public double Damage { get; private set; }
+        private static readonly Random _random = new Random();
+      
+        public int Accuracy { get; }
 
-        //public Bow ()
-        //{
-        //    Name = "Лук";
-        //    Damage = 17;
-        //}
+        public Bow(string name, double damage, int accuracy): base(name, damage)
+        {
+            Accuracy = Math.Clamp(accuracy, 0, 100);
+        }
+        public bool IsHit()
+        {
+            return _random.Next(0, 100) < Accuracy;
+        }
     }
 }
